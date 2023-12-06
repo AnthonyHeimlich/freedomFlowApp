@@ -6,11 +6,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 export default () => {
     return(
         <Tabs screenOptions={{
+            headerShown: false,
             tabBarActiveTintColor:'#012E40',
             tabBarInactiveTintColor:'#012E40',
             tabBarShowLabel:false,
+            tabBarHideOnKeyboard: true,
             tabBarStyle: {
-            backgroundColor: '#F2E3D5',
+                backgroundColor: '#F2E3D5',
                 height:"9%",
                 borderTopLeftRadius:8,
                 borderTopRightRadius:8,

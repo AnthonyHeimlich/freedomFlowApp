@@ -1,22 +1,20 @@
-import {View, StyleSheet, } from 'react-native';
-import React, {useState} from 'react';
+import {View, StyleSheet, TouchableWithoutFeedback,} from 'react-native';
 import { Input, Button, Text} from "react-native-elements";
-import {useFonts} from 'expo-font'
 import {Link} from "expo-router";
+import React, {useState} from 'react';
+
 
 const perfil = () => {
-    const [fontsLoaded] = useFonts({
-        Baloo: require('../../src/assets/fonts/Baloo2-Regular.ttf'),
-        BalooBold: require('../../src/assets/fonts/Baloo2-Bold.ttf'),
-    })
-
-
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
 
+    const entrar = () => {
+        console.log(email)
+        console.log(password)
+    }
+
     return(
         <View style={styles.container}>
-
             <Text style={styles.loginTitle}>Acesse sua conta</Text>
             <Input
                 label={"Email"}
@@ -42,14 +40,16 @@ const perfil = () => {
                 onChangeText={value => setPassword(value)}
             />
             <Button
-
+                TouchableComponent={TouchableWithoutFeedback}
+                onPress={() => entrar()}
                 title={"Acessar"}
                 buttonStyle={styles.button}
                 containerStyle={{width: '90%', backgroundColor: "#3CA6A6", borderRadius:8, marginTop:20}}
                 titleStyle={{fontSize:15, fontFamily:'Baloo'}}
             />
             <Text style={styles.desc}>Ou acesse com:</Text>
-            <Text style={styles.desc}>Não possuí uma conta?<Link style={{color:'#3CA6A6'}} href="/conquistas">  Criar</Link></Text>
+            <Button TouchableComponent={TouchableWithoutFeedback} title={"Google"} buttonStyle={{backgroundColor:"#3CA6A6"}} containerStyle={{marginTop:10}}></Button>
+            <Text style={styles.desc}>Não possui uma conta?<Link style={{color:'#3CA6A6'}} href='../cadastroTab'>  Criar</Link></Text>
 
         </View>
     );
