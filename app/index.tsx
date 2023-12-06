@@ -20,11 +20,8 @@ const StartPage = () => {
     if (!fontsLoaded) {
         return null;
     }
-
     if (onLayoutRootView){
         return <Redirect href="/perfil" />
-    }else{
-
     }
 };
 

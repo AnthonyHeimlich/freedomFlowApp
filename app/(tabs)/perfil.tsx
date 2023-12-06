@@ -18,6 +18,7 @@ const perfil = () => {
             <Text style={styles.loginTitle}>Acesse sua conta</Text>
             <Input
                 label={"Email"}
+                autoComplete={"email"}
                 keyboardType={"email-address"}
                 style={styles.input}
                 labelStyle={styles.label}
