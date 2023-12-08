@@ -22,6 +22,63 @@ const cadastro = () => {
     const [birthDate, setBirthDate] = useState(null)
     const [username, setUsername] = useState(null)
 
+    const [errorEmail, setErrorEmail] = useState(null)
+    const [errorPassword, setErrorPassword] = useState(null)
+    const [errorConfirmPassword, setErrorConfirmPassword] = useState(null)
+    const [errorFirstName, setErrorFirstName] = useState(null)
+    const [errorLastName, setErrorLastName] = useState(null)
+    const [errorBirthDate, setErrorBirthDate] = useState(null)
+    const [errorUsername, setErrorUsername] = useState(null)
+
+    const validar = () =>{
+        let error = false
+        setErrorEmail(null)
+        setErrorPassword(null)
+        setErrorConfirmPassword(null)
+        setErrorFirstName(null)
+        setErrorLastName(null)
+        setErrorBirthDate(null)
+        setErrorUsername(null)
+
+        if(email == null){
+            setErrorEmail("Insira seu email corretamente")
+            error = true
+        }
+        if(password == null){
+            setErrorPassword("Insira a senha")
+            error = true
+        }
+        if(confirmPassword == null){
+            setErrorConfirmPassword("Confirme a senha")
+            error = true
+        }
+        if(firstName == null){
+            setErrorFirstName("Insira seu nome")
+            error = true
+        }
+        if(lastName == null){
+            setErrorLastName("Insira seu último nome")
+            error = true
+        }
+        if(birthDate == null){
+            setErrorBirthDate("Insira sua data de nascimento")
+            error = true
+        }
+        if(username == null){
+            setErrorUsername("Insira seu nome de usuário")
+            error = true
+        }
+
+        return !error
+    }
+
+    const cadastrar = () => {
+        if(validar()){
+            console.log(email)
+            console.log(password)
+        }
+    }
+
     const [date, setDate] = useState(new Date())
     const [showPicker, setShowPicker] = useState(false)
     const toggleDatepicker = () => {
@@ -45,10 +102,6 @@ const cadastro = () => {
         toggleDatepicker()
     }
 
-    const cadastrar = () => {
-        console.log(email)
-        console.log(password)
-    }
 
     return(
         <SafeAreaView>
@@ -68,6 +121,7 @@ const cadastro = () => {
                     inputContainerStyle={{borderBottomWidth:0}}
                     rightIconContainerStyle={styles.icon}
                     onChangeText={value => setEmail(value)}
+                    errorMessage={errorEmail}
                 />
                 <Input
                     label={"Senha"}
@@ -80,6 +134,7 @@ const cadastro = () => {
                     inputContainerStyle={{borderBottomWidth:0}}
                     rightIconContainerStyle={styles.icon}
                     onChangeText={value => setPassword(value)}
+                    errorMessage={errorPassword}
                 />
                 <Input
                     label={"Confirme a Senha"}
@@ -92,31 +147,32 @@ const cadastro = () => {
                     inputContainerStyle={{borderBottomWidth:0}}
                     rightIconContainerStyle={styles.icon}
                     onChangeText={value => setConfirmPassword(value)}
+                    errorMessage={errorConfirmPassword}
                 />
                 <View style={{flexDirection:"row", width:"95%", justifyContent:"space-between"}}>
                     <Input
                         label={"Primeiro Nome"}
                         autoComplete={"name"}
                         cursorColor={"#012E40"}
-                        autoCapitalize={"none"}
                         style={styles.inputSmall}
                         labelStyle={styles.label}
                         containerStyle={{width:'50%', marginTop:0}}
                         inputContainerStyle={{borderBottomWidth:0}}
                         rightIconContainerStyle={styles.icon}
                         onChangeText={value => setFirstName(value)}
+                        errorMessage={errorFirstName}
                     />
                     <Input
                         label={"Último Nome"}
                         autoComplete={"family-name"}
                         cursorColor={"#012E40"}
-                        autoCapitalize={"none"}
                         style={styles.inputSmall}
                         labelStyle={styles.label}
                         containerStyle={{width:'50%', marginTop:0}}
                         inputContainerStyle={{borderBottomWidth:0}}
                         rightIconContainerStyle={styles.icon}
                         onChangeText={value => setLastName(value)}
+                        errorMessage={errorLastName}
                     />
                 </View>
                 <View style={{flexDirection:"row", width:"95%", justifyContent:"space-between"}}>
@@ -164,6 +220,7 @@ const cadastro = () => {
                             containerStyle={{width:'100%', marginTop:0}}
                             inputContainerStyle={{borderBottomWidth:0}}
                             rightIconContainerStyle={styles.icon}
+                            errorMessage={errorBirthDate}
 
                             value={birthDate}
                             editable={false}
@@ -181,6 +238,7 @@ const cadastro = () => {
                         inputContainerStyle={{borderBottomWidth:0}}
                         rightIconContainerStyle={styles.icon}
                         onChangeText={value => setUsername(value)}
+                        errorMessage={errorUsername}
                     />
                 </View>
                 <Button

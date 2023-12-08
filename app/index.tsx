@@ -21,7 +21,7 @@ const StartPage = () => {
         return null;
     }
     if (onLayoutRootView){
-        return <Redirect href="/perfil" />
+        return <Redirect href="/home" />
     }
 };
 

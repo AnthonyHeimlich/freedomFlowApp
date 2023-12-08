@@ -19,6 +19,8 @@ const perfil = () => {
             <Input
                 label={"Email"}
                 autoComplete={"email"}
+                cursorColor={"#012E40"}
+                autoCapitalize={"none"}
                 keyboardType={"email-address"}
                 style={styles.input}
                 labelStyle={styles.label}
