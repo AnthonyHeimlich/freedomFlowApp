@@ -1,7 +1,7 @@
 import {View, StyleSheet, TouchableWithoutFeedback, Touchable,} from 'react-native';
 import { Input, Button, Text} from "react-native-elements";
 import {Link} from "expo-router";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import Api from '../services/api'
 
@@ -27,11 +27,14 @@ const perfil = () => {
         }
     }
 
+    useEffect(() => {
+        emailAPI()
+    }, []);
     return(
         <View style={styles.container}>
             {logged && <>
-                <Button onPress={emailAPI}></Button>
-                <Text>{infoAPI}</Text>
+                <Text style={{color:"#fff", marginBottom:20}}>Usuário logado: {infoAPI}</Text>
+                <Text style={{color:"#fff"}}>Última conquista: </Text>
             </>}
 
 
