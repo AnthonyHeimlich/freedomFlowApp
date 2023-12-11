@@ -25,10 +25,17 @@ const home = () => {
             )
         }
     }
+
+    const stopTimer = () =>{
+        if (customInterval){
+            clearInterval(customInterval)
+        }
+    }
     const restart = () => {
+        stopTimer()
         setMinutes(0)
         setHours(0)
-        startTimer()
+        setDays(0)
     }
     const changeTime = () => {
         setMinutes((prevState) =>{
@@ -40,7 +47,6 @@ const home = () => {
                         })
                         setHours(0)
                         setMinutes(0)
-                        restart()
                     }
                     return prevState + 1
                 })
@@ -61,12 +67,8 @@ const home = () => {
         }
     }
 
-    const timerCount = (day) =>{
-        setDays(day)
-    }
 
-
-    const [days, setDays] = useState(0)
+    const [days, setDays] = useState(13)
     const colorWheel = (days) => {
         if(days >= 3 && days < 5){
             return{minWidth:250, borderWidth:5, borderColor:"#F2E3D5", minHeight:250, borderRadius:999, backgroundColor:"#F23030", alignItems:"center", justifyContent:"center"}
