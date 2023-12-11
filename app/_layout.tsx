@@ -5,6 +5,7 @@ const StackLayout = () => {
         <Stack>
             <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
             <Stack.Screen name="cadastroTab" options={{headerShown: false}}/>
+            <Stack.Screen name="notificacaoTab" options={{headerShown: false}}/>
             <Stack.Screen name="index" options={{headerShown: false, contentStyle: {backgroundColor:"#024959"}}}/>
         </Stack>
     );

@@ -1,12 +1,26 @@
 import {View, Text, Button, StyleSheet, Touchable, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "../../src/utils/i18n"
 import {useTranslation} from "react-i18next";
 import {Link} from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import PhrasesApi from '../services/phrasesApi'
 
 const home = () => {
 
+    const [phrase, setPhrase] = useState(null)
+    const [author   , setAuthor] = useState(null)
+
+    const phrasesApi = async () =>{
+        try{
+            const response = await PhrasesApi.get(`/quotes/change`)
+            if(!(response.data[0].q === 'Too many requests. Obtain an auth key for unlimited access.'))
+            setPhrase(response.data[0].q)
+            setAuthor(response.data[0].a)
+        }catch(error){
+            console.log("ERRO API" + error)
+        }
+    }
 
     const timerCount = (day) =>{
         setDays(day)
@@ -35,10 +49,14 @@ const home = () => {
 
     }
 
+    useEffect(() => {
+        phrasesApi()
+    }, []);
+
     return(
         <View style={styles.container}>
             <View style={styles.notificationContainer}>
-                <Link href='../notificacao'><Ionicons style={{width:"100%", height:"100%", fontSize:36, color:"#fff"}} name='notifications-outline'></Ionicons></Link>
+                <Link href='../notificacaoTab'><Ionicons style={{width:"100%", height:"100%", fontSize:36, color:"#fff"}} name='notifications-outline'></Ionicons></Link>
             </View>
             <View style={styles.statContainer}>
                 <TouchableOpacity onPress={statClick} style={colorWheel(days)}>
@@ -49,7 +67,8 @@ const home = () => {
                 </TouchableOpacity>
             </View>
             <View style={styles.phraseContainer}>
-                <Text>a</Text>
+                <Text style={styles.phrase}>{phrase}</Text>
+                <Text style={styles.author}>- {author}</Text>
             </View>
         </View>
     );
@@ -57,6 +76,17 @@ const home = () => {
 
 const styles = StyleSheet.create({
 
+    phrase:{
+        fontFamily:'Baloo',
+        color:"#fff",
+        fontSize:18,
+    },
+    author:{
+        fontFamily:'Baloo',
+        minWidth:"100%",
+        color:"#fff",
+        textAlign:"right",
+    },
     confirm:{
         color:"#fff",
         fontFamily:'Baloo',
@@ -94,10 +124,14 @@ const styles = StyleSheet.create({
 
     },
     phraseContainer:{
+        textAlign:"right",
+        maxWidth:"90%",
         justifyContent:"center",
         alignItems:"center",
         borderRadius:50,
-        height:"30%"
+        minHeight:"30%",
+        maxHeight:"30%",
+        paddingBottom:100,
     },
 
 });

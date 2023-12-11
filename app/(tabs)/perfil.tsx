@@ -1,58 +1,81 @@
-import {View, StyleSheet, TouchableWithoutFeedback,} from 'react-native';
+import {View, StyleSheet, TouchableWithoutFeedback, Touchable,} from 'react-native';
 import { Input, Button, Text} from "react-native-elements";
 import {Link} from "expo-router";
 import React, {useState} from 'react';
+import RNDateTimePicker from "@react-native-community/datetimepicker";
+import Api from '../services/api'
 
 
 const perfil = () => {
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
 
+    const [logged, setLogged] = useState(true)
+    const [infoAPI, setInfoAPI] = useState(null)
+
     const entrar = () => {
         console.log(email)
         console.log(password)
     }
 
+    const emailAPI = async () =>{
+        try{
+            const response = await Api.get(`/accounts`)
+            setInfoAPI(response.data[0].username)
+        }catch(error){
+            console.log("ERRO API" + error)
+        }
+    }
+
     return(
         <View style={styles.container}>
-            <Text style={styles.loginTitle}>Acesse sua conta</Text>
-            <Input
-                label={"Email"}
-                autoComplete={"email"}
-                cursorColor={"#012E40"}
-                autoCapitalize={"none"}
-                keyboardType={"email-address"}
-                style={styles.input}
-                labelStyle={styles.label}
-                selectionColor={'green'}
-                containerStyle={{width:'95%', marginTop:0}}
-                inputContainerStyle={{borderBottomWidth:0}}
-                rightIcon={{type: 'ionicon', name:'mail-outline', color:'#012E40', size:20}}
-                rightIconContainerStyle={styles.icon}
-                onChangeText={value => setEmail(value)}
-            />
-            <Input
-                label={"Senha"}
-                secureTextEntry={true}
-                style={styles.input}
-                labelStyle={styles.label}
-                containerStyle={{width:'95%', marginTop:0}}
-                inputContainerStyle={{borderBottomWidth:0}}
-                rightIcon={{type: 'ionicon', name:'lock-closed-outline', color:'#012E40', size:20}}
-                rightIconContainerStyle={styles.icon}
-                onChangeText={value => setPassword(value)}
-            />
-            <Button
-                TouchableComponent={TouchableWithoutFeedback}
-                onPress={() => entrar()}
-                title={"Acessar"}
-                buttonStyle={styles.button}
-                containerStyle={{width: '90%', backgroundColor: "#3CA6A6", borderRadius:8, marginTop:20}}
-                titleStyle={{fontSize:15, fontFamily:'Baloo'}}
-            />
-            <Text style={styles.desc}>Ou acesse com:</Text>
-            <Button TouchableComponent={TouchableWithoutFeedback} title={"Google"} buttonStyle={{backgroundColor:"#3CA6A6"}} containerStyle={{marginTop:10}}></Button>
-            <Text style={styles.desc}>Não possui uma conta?<Link style={{color:'#3CA6A6'}} href='../cadastroTab'>  Criar</Link></Text>
+            {logged && <>
+                <Button onPress={emailAPI}></Button>
+                <Text>{infoAPI}</Text>
+            </>}
+
+
+
+            {!logged && <>
+                <Text style={styles.loginTitle}>Acesse sua conta</Text>
+                <Input
+                    label={"Email"}
+                    autoComplete={"email"}
+                    cursorColor={"#012E40"}
+                    autoCapitalize={"none"}
+                    keyboardType={"email-address"}
+                    style={styles.input}
+                    labelStyle={styles.label}
+                    selectionColor={'green'}
+                    containerStyle={{width:'95%', marginTop:0}}
+                    inputContainerStyle={{borderBottomWidth:0}}
+                    rightIcon={{type: 'ionicon', name:'mail-outline', color:'#012E40', size:20}}
+                    rightIconContainerStyle={styles.icon}
+                    onChangeText={value => setEmail(value)}
+                />
+                <Input
+                    label={"Senha"}
+                    secureTextEntry={true}
+                    style={styles.input}
+                    labelStyle={styles.label}
+                    containerStyle={{width:'95%', marginTop:0}}
+                    inputContainerStyle={{borderBottomWidth:0}}
+                    rightIcon={{type: 'ionicon', name:'lock-closed-outline', color:'#012E40', size:20}}
+                    rightIconContainerStyle={styles.icon}
+                    onChangeText={value => setPassword(value)}
+                />
+                <Button
+                    TouchableComponent={TouchableWithoutFeedback}
+                    onPress={() => entrar()}
+                    title={"Acessar"}
+                    buttonStyle={styles.button}
+                    containerStyle={{width: '90%', backgroundColor: "#3CA6A6", borderRadius:8, marginTop:20}}
+                    titleStyle={{fontSize:15, fontFamily:'Baloo'}}
+                />
+                <Text style={styles.desc}>Ou acesse com:</Text>
+                <Button TouchableComponent={TouchableWithoutFeedback} title={"Google"} buttonStyle={{backgroundColor:"#3CA6A6"}} containerStyle={{marginTop:10}}></Button>
+                <Text style={styles.desc}>Não possui uma conta?<Link style={{color:'#3CA6A6'}} href='../cadastroTab'>  Criar</Link></Text>
+            </>}
 
         </View>
     );
